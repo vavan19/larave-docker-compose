@@ -11,6 +11,7 @@ services:
     restart: unless-stopped
     tty: true
     environment:
+      XDEBUG_CONFIG: "remote_host=docker.for.mac.localhost remote_enable=1"
       SERVICE_NAME: app
       SERVICE_TAGS: dev
     working_dir: /var/www/

@@ -26,6 +26,10 @@ RUN apk update && apk add --no-cache \
     php7-session \
     php7-zlib
 
+RUN apk add --no-cache $PHPIZE_DEPS && \
+    pecl install xdebug && docker-php-ext-enable xdebug && \
+    docker-php-ext-install pdo_mysql 
+
 # Add and Enable PHP-PDO Extenstions
 RUN docker-php-ext-install pdo pdo_mysql
 RUN docker-php-ext-enable pdo_mysql
@@ -41,6 +45,9 @@ RUN usermod -u 1000 www-data
 
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www/html
+
+#xdebug settings
+COPY ./etc/xdebug.ini /usr/local/etc/php/php.ini
 
 # Change current user to www
 USER www-data
