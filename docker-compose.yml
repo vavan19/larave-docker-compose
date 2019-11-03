@@ -30,10 +30,24 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    # expose:
+    #   - "6001"
     volumes:
       - ./src/:/var/www/
       - ./nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - app
     networks:
+      - mynet
+
+  nodejs:
+    build: 
+      context: ./nodejs
+    # volumes:
+    #   - ./src/:/var/www/
+    ports: 
+      - "3000:3000"
+    networks: 
       - mynet
 
   #MySQL Service
@@ -76,3 +90,5 @@ networks:
 volumes:
   mysqldata:
     driver: local
+  # redis:
+  #   driver: local
