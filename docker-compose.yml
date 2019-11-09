@@ -46,7 +46,7 @@ services:
     # volumes:
     #   - ./src/:/var/www/
     ports: 
-      - "3000:3000"
+      - "3001:3001"
     networks: 
       - mynet
 
