@@ -34,11 +34,15 @@ RUN apk update && apk add --no-cache \
 RUN apk add --no-cache $PHPIZE_DEPS && \
     pecl install xdebug && docker-php-ext-enable xdebug
 
+RUN pecl install redis-5.1.1 \
+    && docker-php-ext-enable redis
+
 # Add and Enable PHP-PDO Extenstions
 RUN docker-php-ext-install pdo pdo_mysql
 RUN docker-php-ext-enable pdo_mysql
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install zip
+
 
 # Install PHP Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

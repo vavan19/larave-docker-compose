@@ -81,6 +81,26 @@ services:
       MYSQL_ROOT_PASSWORD: password 
     networks:
       - mynet
+  
+  # redis
+  redis:
+    image: "redis:alpine"
+    ports:
+      - '6379:6379'
+    networks:
+      - mynet
+    volumes:
+      - redis-data:/data
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - "8081:8081"
 
 #Docker Networks
 networks:
@@ -90,5 +110,5 @@ networks:
 volumes:
   mysqldata:
     driver: local
-  # redis:
-  #   driver: local
+  redis-data:
+    driver: local
